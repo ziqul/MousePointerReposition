@@ -566,31 +566,20 @@ namespace MousePointerReposition
                 || foreGroundWindowRectStart.top != windowRect.top
                 || foreGroundWindowRectStart.Height != windowRect.Height)
             {
-                // check if mouse position is within new active application window
                 // get current cursor position
                 Vanara.PInvoke.User32.GetCursorPos(out System.Drawing.Point cursorPos);
 
                 App.logger.Debug(String.Format("Current cursor: x={0} y={1}", cursorPos.X, cursorPos.Y));
 
-                if (windowRect.left <= cursorPos.X
-                    && windowRect.right >= cursorPos.X
-                    && windowRect.top <= cursorPos.Y
-                    && windowRect.bottom >= cursorPos.Y)
-                {
-                    return true;
-                }
-                else
-                {
-                    int x = windowRect.left + windowRect.Width / 2;
-                    int y = windowRect.top + windowRect.Height / 2;
+                int x = windowRect.left + windowRect.Width / 2;
+                int y = windowRect.top + windowRect.Height / 2;
 
-                    Debug.WriteLine(String.Format("New cursor: x={0} y={1}", x, y));
-                    Vanara.PInvoke.User32.SetCursorPos(x + 1, y + 1); // sometimes cursor is not positioned right
-                    Vanara.PInvoke.User32.SetCursorPos(x, y); // calling twice sets the correct postion
+                Debug.WriteLine(String.Format("New cursor: x={0} y={1}", x, y));
+                Vanara.PInvoke.User32.SetCursorPos(x + 1, y + 1); // sometimes cursor is not positioned right
+                Vanara.PInvoke.User32.SetCursorPos(x, y); // calling twice sets the correct postion
 
-                    App.logger.Debug("TryMouseRepositioning end");
-                    return true;
-                }
+                App.logger.Debug("TryMouseRepositioning end");
+                return true;
             }
             else
             {
